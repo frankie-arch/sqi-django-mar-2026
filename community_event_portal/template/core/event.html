@@ -1,0 +1,58 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}
+<title>Community Event</title>
+{% endblock title %}
+{% block content %}
+<section class="events-section">
+    <h1 class="events-title">Upcoming Events</h1>
+    <p class="events-subtitle">
+        Explore the exciting workshops, meetups, and activities happening in our community.
+    </p>
+    <div class="events-grid">
+        <!-- Event 1 -->
+        <div class="event-card">
+            <img src="{% static 'images/coding.jpg' %}" alt="Coding Workshop">
+            <h3>Beginner Coding Workshop</h3>
+            <p>Learn the basics of Python and start building simple projects.</p>
+            <span class="event-date">📅 April 12, 2026</span>
+        </div>
+        <!-- Event 2 -->
+        <div class="event-card">
+            <img src="{% static 'images/art.jpg' %}" alt="Art Workshop">
+            <h3>Creative Art Session</h3>
+            <p>Express your creativity through painting and drawing.</p>
+            <span class="event-date">📅 April 18, 2026</span>
+        </div>
+        <!-- Event 3 -->
+        <div class="event-card">
+            <img src="{% static 'images/tech.jpg' %}" alt="Tech Meetup">
+            <h3>Tech Community Meetup</h3>
+            <p>Network with developers and tech enthusiasts in the community.</p>
+            <span class="event-date">📅 April 20, 2026</span>
+        </div>
+        <!-- Event 4 -->
+        <div class="event-card">
+            <img src="{% static 'images/fitness.jpg' %}" alt="Fitness Event">
+            <h3>Morning Fitness Bootcamp</h3>
+            <p>Join us for an energetic workout session to start your day.</p>
+            <span class="event-date">📅 April 22, 2026</span>
+        </div>
+        <!-- Event 5 -->
+        <div class="event-card">
+            <img src="{% static 'images/business.jpg' %}" alt="Business Seminar">
+            <h3>Entrepreneurship Seminar</h3>
+            <p>Learn how to start and grow your own business.</p>
+            <span class="event-date">📅 April 25, 2026</span>
+        </div>
+        <!-- Event 6 -->
+        <div class="event-card">
+            <img src="{% static 'images/gaming.jpg' %}" alt="Game Night">
+            <h3>Community Game Night</h3>
+            <p>Relax, play games, and connect with other community members.</p>
+            <span class="event-date">📅 April 30, 2026</span>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

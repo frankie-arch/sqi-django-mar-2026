@@ -1,0 +1,36 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}
+<title>About Community</title>
+{% endblock title %}
+{% block content %}
+<section class="about-section">
+    <h1>About Our Community Center</h1>
+    <div class="about-container">
+        <div class="about-text">
+            <p>
+                The Community Event Center is a place where people come together
+                to learn, connect, and grow. Our center hosts a wide range of
+                activities designed to bring members of the community closer
+                while encouraging creativity and collaboration.
+            </p>
+            <p>
+                Throughout the year, we organize workshops, technology meetups,
+                creative art sessions, networking events, and fun social
+                activities. Whether you're interested in learning new skills,
+                meeting new people, or simply enjoying a community experience,
+                there is always something happening here.
+            </p>
+            <p>
+                Our mission is to create a welcoming environment where everyone
+                feels inspired to participate, share ideas, and develop their
+                talents. We believe strong communities are built through
+                connection, learning, and shared experiences.
+            </p>
+        </div>
+        <div class="about-image">
+            <img src="{% static 'images/community-center.jpg' %}" alt="Community Center">
+        </div>
+    </div>
+</section>
+{% endblock %}

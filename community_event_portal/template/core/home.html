@@ -1,0 +1,70 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}
+<title>Community Home</title>
+{% endblock title %}
+{% block content %}
+<!-- Hero Section -->
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to the Community Event Portal</h1>
+        <p>
+            Discover exciting workshops, inspiring meetups, and fun community
+            activities happening around you. Our goal is to bring people together
+            to learn, connect, and grow.
+        </p>
+        <a href="{% url 'core:event' %}" class="btn-events">
+            Explore Upcoming Events
+        </a>
+    </div>
+</section>
+<!-- Featured Event Banner -->
+<section class="featured-event">
+    <div class="featured-container">
+        <div class="featured-image">
+            <img src="{% static 'images/workshop.jpg' %}" alt="Featured Workshop">
+        </div>
+        <div class="featured-details">
+            <h2>Featured Event</h2>
+            <h3>Creative Coding Workshop</h3>
+            <p>
+                Join our exciting coding workshop where beginners and enthusiasts
+                can learn how to build simple projects using Python and JavaScript.
+                Perfect for students, creators, and curious minds!
+            </p>
+            <p class="event-date">
+                📅 Date: April 12, 2026
+            </p>
+            <a href="{% url 'core:event' %}" class="btn-featured">
+                View More Events
+            </a>
+        </div>
+    </div>
+</section>
+<!-- Quick Info Section -->
+<section class="quick-info">
+    <div class="info-card">
+        <h3>Workshops</h3>
+        <p>
+            Learn new skills from experienced instructors in areas like
+            technology, art, entrepreneurship, and personal development.
+        </p>
+    </div>
+    <div class="info-card">
+        <h3>Meetups</h3>
+        <p>
+            Connect with like-minded individuals, share ideas, and expand
+            your network in a friendly community environment.
+        </p>
+    </div>
+    <div class="info-card">
+        <h3>Community Activities</h3>
+        <p>
+            From game nights to outdoor activities, our events are designed
+            to bring people together and create memorable experiences.
+        </p>
+    </div>
+</section>
+
+{% endblock %}

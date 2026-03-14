@@ -1,0 +1,33 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+<h1 style="margin-bottom:30px;">Albums</h1>
+
+<div class="grid">
+
+{% for album in albums %}
+
+<div class="card fade">
+
+<img src="{{ album.cover_image.url }}" alt="album">
+
+<div class="card-body">
+
+<div class="card-title">
+{{ album.title }}
+</div>
+
+<div class="card-sub">
+by {{ album.artist.name }}
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+<section class="hero fade">
+
+<h1>Discover Amazing Music</h1>
+
+<p>
+Browse artists and albums from around the world.
+Find your next favorite track and explore new sounds.
+</p>
+
+<a href="{% url 'music:music' %}" class="btn">Browse Albums</a>
+
+</section>
+
+<section class="fade">
+
+<h2 style="margin-bottom:30px;">Featured Albums</h2>
+
+<div class="grid">
+
+{% for album in albums|slice:":6" %}
+
+<div class="card">
+
+<img src="{{ album.cover_image.url }}" alt="album">
+
+<div class="card-body">
+
+<div class="card-title">{{ album.title }}</div>
+
+<div class="card-sub">{{ album.artist.name }}</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+{% endblock %}

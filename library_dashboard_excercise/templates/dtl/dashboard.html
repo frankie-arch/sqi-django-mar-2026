@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Dashboard</title>
+</head>
+<body>
+    <!-- 1. Basic Variables -->
+    <h1>{{ library_name }}</h1>
+    <p>Librarian: {{ librarian }}</p>
+    <p>Today's Date: {{ current_date|date:"l, d F Y" }}</p>
+    <h3>{{ featured_message }}</h3>
+
+    <!-- 2. Conditional Greeting -->
+    {% if is_weekend %}
+        <p>Welcome to a new weekend at the library!</p>
+    {% else %}
+        <p>Welcome to a new weekday at the library!</p>
+    {% endif %}
+
+    <!-- 3. Books List -->
+    <h2>Books Collection</h2>
+    <ul>
+        {% for book in books  %}
+        
+        
+        <li>
+        -------------------------------------------------------------------------------------------
+        <br>
+            {{ book.title }} by {{ book.author }} ({{ book.publication_year }})
+            <br>
+            ISBN: {{ book.isbn }}
+            <br>
+            Price: ₦{{ book.price}}
+            <br>
+            {% if book.available_copies > 0 %}
+                <span>Available ({{ book.available_copies }})<span>            
+            {% else %}
+                <span>Out of copies<span>
+            {% endif %}
+            <br>
+            {% if book.is_featured %}
+                <span>Featured</span>    
+            {% else %}
+                <span>Not featured<span>
+            {% endif %}
+            <br>
+        </li>
+        <li>
+        -------------------------------------------------------------------------------------------
+        </li><br>
+        {% endfor %}
+    </ul>
+
+    <!-- 4. Library Statistics -->
+    <h2>Library Statistics</h2>
+
+    <ul>
+        <li>- Total members: {{ library_stats.total_members }}</li>
+        <li>- Books borrowed today: {{ library_stats.books_borrowed_today }}</li>
+        <li>- overdue books: {{ library_stats.overdue_books }}</li>
+        <li>- New arrivals this month: {{ library_stats.new_arrivals_this_month }}</li>
+    </ul>
+
+    <p>&copy; {% now 'Y' %} all rights reserved</p>
+</body>
+</html>

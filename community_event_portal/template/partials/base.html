@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>Community Event Portal</title>
+    {% endblock title %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    
+    <!-- JavaScript -->
+    
+</head>
+<body>
+    <!-- Announcement Bar -->
+<div id="announcement-bar">
+
+<div class="announcement-track">
+
+<span>🚀 New Django Workshop – June 10</span>
+<span>🎤 Community Meetup – Networking & Tech Talks</span>
+<span>📚 Free Beginner Coding Bootcamp – Register Now</span>
+
+</div>
+
+<button id="close-announcement">✕</button>
+
+</div>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">Community Event Portal</h1>
+            <ul class="nav-links">
+                <li><a href="{% url 'core:home' %}">Home</a></li>
+                <li><a href="{% url 'core:about' %}">About</a></li>
+                <li><a href="{% url 'core:event' %}">Events</a></li>
+                <li><a href="{% url 'core:contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Main Page Content -->
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 Community Event Center</p>
+            <p>Connecting people through workshops, meetups, and activities.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>
