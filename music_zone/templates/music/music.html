@@ -8,6 +8,7 @@
 
 {% for album in albums %}
 
+<a href="{% url 'music:album_details' album.id %}">
 <div class="card fade">
 
 <img src="{{ album.cover_image.url }}" alt="album">
@@ -29,5 +30,6 @@ by {{ album.artist.name }}
 {% endfor %}
 
 </div>
+</a>
 
 {% endblock %}

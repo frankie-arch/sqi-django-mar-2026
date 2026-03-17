@@ -1,0 +1,157 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+<div class="artist-detail fade">
+
+  <!-- Artist Header -->
+  <div class="artist-header">
+    <div class="artist-photo-container">
+      <img src="{{ artist.image.url }}" alt="{{ artist.name }}">
+      <div class="follow-btn">Follow</div>
+    </div>
+
+    <div class="artist-info">
+      <h2 class="artist-name">{{ artist.name }}</h2>
+      <p class="artist-debut">Debut Year: {{ artist.debut_year }}</p>
+    </div>
+  </div>
+
+  <!-- Optional Albums Section -->
+  <div class="artist-albums">
+    <h3>Albums</h3>
+    <div class="grid">
+      {% for album in artist.albums.all %}
+        <a href="{% url 'music:album_details' album.id %}" class="card fade">
+          <img src="{{ album.cover_image.url }}" alt="{{ album.title }}">
+          <div class="card-body">
+            <div class="card-title">{{ album.title }}</div>
+            <div class="card-sub">Released {{ album.release_date }}</div>
+          </div>
+        </a>
+      {% empty %}
+        <p>No albums available.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+<style>
+.artist-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 30px 0;
+}
+
+.artist-header {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.artist-photo-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease;
+}
+
+.artist-photo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.artist-photo-container:hover {
+  transform: scale(1.05);
+}
+
+.follow-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  padding: 10px 20px;
+  background: #1db954;
+  color: black;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.artist-photo-container:hover .follow-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.artist-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+}
+
+.artist-name {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.artist-debut {
+  font-size: 16px;
+  color: #b3b3b3;
+}
+
+.artist-albums h3 {
+  margin-bottom: 15px;
+  font-weight: 500;
+  color: white;
+}
+
+.fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.6s ease-out;
+}
+
+.fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<script>
+// Fade-in animations
+const fadeElements = document.querySelectorAll('.fade');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+}, { threshold: 0.2 });
+
+fadeElements.forEach(el => observer.observe(el));
+
+// Follow button click animation
+const followBtn = document.querySelector('.follow-btn');
+if(followBtn){
+  followBtn.addEventListener('click', () => {
+    followBtn.textContent = 'Following';
+    followBtn.style.background = '#17a44b';
+    followBtn.style.transform = 'scale(1.1)';
+    setTimeout(() => followBtn.style.transform = '', 200);
+  });
+}
+</script>
+
+{% endblock %}

@@ -7,7 +7,7 @@
 <div class="grid">
 
 {% for artist in artists %}
-
+<a href="{% url 'artist:artist_details' artist.id %}">
 <div class="card fade">
 
 <img src="{{ artist.image.url }}" alt="artist">
@@ -27,5 +27,6 @@
 {% endfor %}
 
 </div>
+</a>
 
 {% endblock %}
