@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RecipeHub</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0f0f12;
+color:white;
+}
+
+/* NAVBAR */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:#121217;
+border-bottom:1px solid #2a2a2a;
+transition:0.3s;
+}
+
+.logo{
+font-size:22px;
+font-weight:600;
+color:#ff7b00;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav a{
+text-decoration:none;
+color:#ddd;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#ff7b00;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:100px 20px;
+background:linear-gradient(120deg,#1a1a1f,#121217);
+}
+
+.hero h1{
+font-size:50px;
+margin-bottom:20px;
+}
+
+.hero p{
+color:#bbb;
+max-width:600px;
+margin:auto;
+line-height:1.6;
+}
+
+.btn{
+display:inline-block;
+margin-top:30px;
+padding:12px 30px;
+background:#ff7b00;
+color:white;
+border-radius:30px;
+text-decoration:none;
+transition:0.3s;
+position:relative;
+overflow:hidden;
+}
+
+.btn:hover{
+background:#e66a00;
+transform:scale(1.05);
+}
+
+/* RIPPLE EFFECT */
+.btn span{
+position:absolute;
+background:rgba(255,255,255,0.4);
+border-radius:50%;
+transform:scale(0);
+animation:ripple 0.6s linear;
+pointer-events:none;
+}
+
+@keyframes ripple{
+to{
+transform:scale(4);
+opacity:0;
+}
+}
+
+/* CONTAINER */
+
+.container{
+width:90%;
+max-width:1200px;
+margin:auto;
+padding:40px 0;
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+}
+
+/* CARD */
+
+.card{
+background:#18181f;
+border-radius:10px;
+overflow:hidden;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
+}
+
+.card img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+.card-body{
+padding:15px;
+}
+
+.card-title{
+font-size:16px;
+font-weight:500;
+}
+
+.card-sub{
+font-size:13px;
+color:#aaa;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:25px;
+border-top:1px solid #2a2a2a;
+color:#888;
+margin-top:50px;
+}
+
+/* ANIMATION */
+
+.fade{
+opacity:0;
+transform:translateY(30px);
+transition:0.8s;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">🍲 RecipeHub</div>
+
+    <ul>
+        <li><a href="{% url 'recipe:add_recipe' %}">Add recipe</a></li>
+        <li><a href="{% url 'recipe:all_recipe' %}">Recipes</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Favorites</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+
+<!-- MAIN CONTENT -->
+    {% block content %}
+<div class="container">
+<section class="hero">
+    <h1 class="fade">Discover Delicious Recipes</h1>
+    <p class="fade">Cook smart. Eat better. Explore amazing meals from around the world.</p>
+    <a href="#" class="btn fade">Explore Now</a>
+</section>
+    {% endblock %}
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 RecipeHub | Made with ❤️</p>
+</footer>
+
+<script>
+
+/* FADE ANIMATION */
+const elements = document.querySelectorAll('.fade');
+
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('show');
+}
+});
+});
+
+elements.forEach(el=>observer.observe(el));
+
+/* NAVBAR SHADOW */
+window.addEventListener('scroll', ()=>{
+const nav = document.querySelector('nav');
+
+if(window.scrollY > 20){
+nav.style.boxShadow = '0 5px 15px rgba(0,0,0,0.5)';
+}else{
+nav.style.boxShadow = 'none';
+}
+});
+
+/* BUTTON RIPPLE EFFECT */
+const buttons = document.querySelectorAll('.btn');
+
+buttons.forEach(btn=>{
+btn.addEventListener('click', function(e){
+
+let x = e.clientX - e.target.offsetLeft;
+let y = e.clientY - e.target.offsetTop;
+
+let ripple = document.createElement('span');
+ripple.style.left = x + 'px';
+ripple.style.top = y + 'px';
+
+this.appendChild(ripple);
+
+setTimeout(()=>{
+ripple.remove();
+},600);
+
+});
+});
+
+</script>
+
+</body>
+</html>
