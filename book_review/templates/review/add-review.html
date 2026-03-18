@@ -1,0 +1,224 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+<div class="review-form-container fade">
+
+    <h2 class="form-title">Add Your Review 📖</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="review-form">
+        {% csrf_token %}
+
+        <!-- Non-field errors -->
+        <div class="form-errors">
+            <ul>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Reviewer Name -->
+        <div class="form-group">
+            <label for="reviewer_name">Your Name</label>
+            <input type="text" name="reviewer_name" placeholder="Enter your full name" value="{{ form.reviewer_name.value|default_if_none:'' }}">
+            <ul class="error-list">
+                {% for error in form.errors.reviewer_name %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Rating -->
+        <div class="form-group">
+            <label>Rating</label>
+            <div class="rating-box">
+                <div class="stars">
+                    <span data-value="1">★</span>
+                    <span data-value="2">★</span>
+                    <span data-value="3">★</span>
+                    <span data-value="4">★</span>
+                    <span data-value="5">★</span>
+                </div>
+                <input type="hidden" name="rating" id="rating-value" value="{{ form.rating.value|default_if_none:'' }}">
+            </div>
+            <ul class="error-list">
+                {% for error in form.errors.rating %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Comment -->
+        <div class="form-group">
+            <label for="comment">Comment</label>
+            <textarea name="comment" placeholder="Write your comment here...">{{ form.comment.value|default_if_none:'' }}</textarea>
+            <ul class="error-list">
+                {% for error in form.errors.comment %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <button type="submit" class="submit-btn">Add Review</button>
+    </form>
+
+</div>
+
+<style>
+.review-form-container{
+    max-width:600px;
+    margin:40px auto;
+    padding:30px;
+    background:#1e1e25;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    color:#fff;
+    transition:0.4s;
+}
+
+.review-form-container:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+
+.form-title{
+    text-align:center;
+    margin-bottom:25px;
+    font-size:28px;
+    color:#1db954;
+}
+
+.review-form .form-group{
+    margin-bottom:20px;
+    position:relative;
+}
+
+.review-form label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:500;
+    color:#ddd;
+}
+
+.review-form input[type="text"],
+.review-form textarea{
+    width:100%;
+    padding:12px 15px;
+    border-radius:8px;
+    border:none;
+    background:#2a2a36;
+    color:#fff;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.review-form input[type="text"]:focus,
+.review-form textarea:focus{
+    outline:none;
+    background:#333341;
+    box-shadow:0 0 8px #1db954;
+}
+
+.review-form textarea{
+    min-height:100px;
+    resize:none;
+}
+
+.error-list{
+    margin-top:5px;
+    color:#ff4d4d;
+    font-size:13px;
+    list-style:none;
+    padding-left:0;
+}
+
+.submit-btn{
+    display:block;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#1db954;
+    color:#fff;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.submit-btn:hover{
+    background:#17a44b;
+    transform:scale(1.05);
+}
+
+/* STAR RATING */
+.stars{
+    font-size:28px;
+    cursor:pointer;
+    display:flex;
+}
+
+.stars span{
+    opacity:0.3;
+    transition:0.2s;
+    margin-right:5px;
+}
+
+.stars span.active{
+    opacity:1;
+    color:#ffcc00;
+    transform:scale(1.2);
+}
+
+.fade{
+    opacity:0;
+    transform:translateY(30px);
+    transition:0.8s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+</style>
+
+<script>
+const stars = document.querySelectorAll('.stars span');
+const ratingInput = document.getElementById('rating-value');
+
+stars.forEach((star, index) => {
+
+    star.addEventListener('click', () => {
+        let value = star.getAttribute('data-value');
+        ratingInput.value = value;
+
+        stars.forEach(s => s.classList.remove('active'));
+
+        for(let i = 0; i < value; i++){
+            stars[i].classList.add('active');
+        }
+    });
+
+    star.addEventListener('mouseover', () => {
+        for(let i = 0; i <= index; i++){
+            stars[i].style.opacity = "1";
+        }
+    });
+
+    star.addEventListener('mouseleave', () => {
+        stars.forEach(s => s.style.opacity = "0.3");
+        let currentValue = ratingInput.value;
+        for(let i = 0; i < currentValue; i++){
+            stars[i].classList.add('active');
+        }
+    });
+});
+
+// Fade-in animation
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.fade').forEach(el => el.classList.add('show'));
+});
+</script>
+
+{% endblock %}

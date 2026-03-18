@@ -1,0 +1,183 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+<div class="book-detail fade">
+
+    <!-- BOOK HEADER -->
+    <div class="book-header">
+    
+        <div class="book-img">
+                <img src="{{ book_details.cover_image.url }}">
+        </div>
+
+        <div class="book-info">
+            <h1>{{ book_details.title }}</h1>
+            <p class="author">by {{ book_details.author }}</p>
+        
+            <!-- ADD REVIEW BUTTON -->
+            
+            <div class="add-review-container">
+
+                    <a href="{% url 'book:add_review' book_details.pk %}" class="add-review-btn">
+                        ✏️ Write a Review
+                    </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="reviews-section">
+
+        <h2>Reviews ⭐</h2>
+
+        {% for review in reviews %}
+        <div class="review-card fade">
+
+            <div class="review-top">
+                <strong>{{ review.reviewer_name }}</strong>
+
+                <div class="stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            ⭐
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <p class="comment">{{ review.comment }}</p>
+            <small class="date">{{ review.created_at }}</small>
+
+        </div>
+        {% empty %}
+        <p class="no-review">No reviews yet. Be the first to review! 🚀</p>
+        {% endfor %}
+
+        <!-- ADD REVIEW BUTTON AT THE BOTTOM -->
+        <div class="add-review-container-bottom">
+            <a href="{% url 'book:add_review' book_details.pk %}" class="add-review-btn">
+                ✏️ Write a Review
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+/* HEADER */
+.book-header {
+    display:flex;
+    gap:30px;
+    margin-bottom:40px;
+    align-items:center;
+}
+
+.book-img img {
+    width:220px;
+    height:300px;
+    object-fit:cover;
+    border-radius:10px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* BOOK INFO */
+.book-info h1 {
+    font-size:28px;
+}
+
+.author {
+    color:#aaa;
+    margin:5px 0 15px;
+}
+
+/* BUTTON */
+.add-review-container, .add-review-container-bottom {
+    margin-top:20px;
+}
+
+.add-review-btn {
+    display:inline-block;
+    padding:12px 25px;
+    background:#ff7b00;
+    border-radius:25px;
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.add-review-btn:hover {
+    transform: scale(1.05);
+    background:#e66a00;
+}
+
+/* REVIEWS */
+.reviews-section {
+    margin-top:30px;
+}
+
+.review-card {
+    background:#18181f;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+    transition:0.3s;
+}
+
+.review-card:hover {
+    transform:translateY(-5px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.4);
+}
+
+.review-top {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+
+.stars {
+    color:#ffcc00;
+}
+
+.comment {
+    color:#ddd;
+    margin-bottom:5px;
+    line-height:1.5;
+}
+
+.date {
+    color:#777;
+    font-size:12px;
+}
+
+.no-review {
+    color:#aaa;
+    margin-top:10px;
+}
+
+</style>
+
+<script>
+
+// small hover animation boost
+const cards = document.querySelectorAll('.review-card');
+
+cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'scale(1.02)';
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'scale(1)';
+    });
+});
+
+</script>
+
+{% endblock %}

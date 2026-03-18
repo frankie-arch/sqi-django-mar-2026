@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BookVerse 📚</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins', sans-serif;
+}
+
+/* BODY */
+body{
+background:#0f0f12;
+color:#e0e0e0;
+}
+
+/* NAVBAR */
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:#121217;
+border-bottom:1px solid #2a2a2a;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+font-size:22px;
+font-weight:600;
+color:#ff7b00;
+cursor:pointer;
+transition:0.3s;
+}
+
+.logo:hover{
+transform:scale(1.1);
+}
+
+/* NAV LINKS */
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav a{
+text-decoration:none;
+color:#ccc;
+transition:0.3s;
+position:relative;
+}
+
+nav a::after{
+content:'';
+position:absolute;
+bottom:-5px;
+left:0;
+width:0%;
+height:2px;
+background:#ff7b00;
+transition:0.3s;
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+nav a:hover{
+color:#fff;
+}
+
+/* HERO */
+.hero{
+text-align:center;
+padding:80px 20px;
+animation:fadeIn 1s ease-in;
+}
+
+.hero h1{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.hero p{
+color:#aaa;
+max-width:600px;
+margin:auto;
+line-height:1.6;
+}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+margin-top:25px;
+padding:12px 30px;
+background:#ff7b00;
+border-radius:30px;
+text-decoration:none;
+color:white;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#e66a00;
+transform:scale(1.05);
+}
+
+/* CONTAINER */
+.container{
+width:90%;
+max-width:1200px;
+margin:auto;
+padding:40px 0;
+}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:25px;
+color:#888;
+border-top:1px solid #2a2a2a;
+margin-top:50px;
+}
+
+/* FADE ANIMATION */
+.fade{
+opacity:0;
+transform:translateY(30px);
+transition:0.8s;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* KEYFRAMES */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+<div class="logo">BookVerse</div>
+
+<ul>
+<li><a href="{% url 'book:book_list' %}">Books</a></li>
+{% comment %} <li><a href="{% url 'reviews:review' %}">Reviews</a></li> {% endcomment %}
+<li><a href="#">Add Review</a></li>
+</ul>
+{% block hero %}
+
+</nav>
+
+<!-- HERO SECTION -->
+<div class="hero fade">
+<h1>Discover & Review Amazing Books 📚</h1>
+<p>
+Explore books, read reviews, and share your thoughts with the world.
+Your next favorite book is just a click away.
+</p>
+
+<a href="{% url 'book:book_list' %}" class="btn">Browse Books</a>
+</div>
+{% endblock %}
+
+<!-- MAIN CONTENT -->
+<div class="container">
+{% block content %}
+{% endblock %}
+</div>
+
+<!-- FOOTER -->
+<footer>
+© 2026 BookVerse • Built with Django 🚀
+</footer>
+
+<script>
+
+/* FADE-IN ON SCROLL */
+const elements = document.querySelectorAll('.fade');
+
+const observer = new IntersectionObserver(entries => {
+entries.forEach(entry => {
+if(entry.isIntersecting){
+entry.target.classList.add('show');
+}
+});
+});
+
+elements.forEach(el => observer.observe(el));
+
+/* LOGO CLICK ANIMATION */
+const logo = document.querySelector('.logo');
+
+logo.addEventListener('click', ()=>{
+logo.style.transform = 'rotate(360deg)';
+setTimeout(()=> logo.style.transform = '', 500);
+});
+
+/* BUTTON RIPPLE EFFECT */
+const btns = document.querySelectorAll('.btn');
+
+btns.forEach(btn=>{
+btn.addEventListener('click', function(e){
+
+const circle = document.createElement('span');
+circle.style.position = 'absolute';
+circle.style.background = 'rgba(255,255,255,0.3)';
+circle.style.borderRadius = '50%';
+circle.style.width = '100px';
+circle.style.height = '100px';
+circle.style.top = e.offsetY + 'px';
+circle.style.left = e.offsetX + 'px';
+circle.style.transform = 'translate(-50%, -50%)';
+circle.style.animation = 'ripple 0.6s linear';
+
+this.appendChild(circle);
+
+setTimeout(()=> circle.remove(), 600);
+
+});
+});
+
+/* RIPPLE KEYFRAME */
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes ripple{
+from{opacity:1; transform:scale(0);}
+to{opacity:0; transform:scale(2);}
+}
+`;
+document.head.appendChild(style);
+
+</script>
+
+</body>
+</html>
